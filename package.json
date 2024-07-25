@@ -23,8 +23,12 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
+    "lint": "next lint --dir .",
+    "lint-staged": "lint-staged",
+    "lint:fix": "next lint --dir . --fix",
     "prepare": "husky",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "start": "next start"
   },
   "dependencies": {

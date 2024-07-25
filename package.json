@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "description": "My personal blog built with Next.js, showcasing my thoughts, projects, and experiences.",
-  "author": "Triska Mahfud K (https://github.com/triskacode)",
-  "license": "MIT",
+  "keywords": [
+    "nextjs",
+    "react",
+    "javascript",
+    "personal-blog",
+    "portfolio"
+  ],
   "homepage": "https://github.com/triskacode/portfolio-next-v4#readme",
   "bugs": {
     "url": "https://github.com/triskacode/portfolio-next-v4/issues"
@@ -13,33 +18,37 @@
     "type": "git",
     "url": "https://github.com/triskacode/portfolio-next-v4.git"
   },
-  "keywords": [
-    "nextjs",
-    "react",
-    "javascript",
-    "personal-blog",
-    "portfolio"
-  ],
+  "license": "MIT",
+  "author": "Triska Mahfud K (https://github.com/triskacode)",
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "next dev",
+    "lint": "next lint",
+    "prepare": "husky",
+    "start": "next start"
   },
   "dependencies": {
+    "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.5"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@vercel/style-guide": "^6.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.5",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.2",
+    "lint-staged": "^15.2.7",
     "postcss": "^8",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5"
+    "typescript": "^5"
   },
   "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e",
   "engines": {

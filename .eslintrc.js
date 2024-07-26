@@ -26,4 +26,12 @@ module.exports = {
   rules: {
     'import/no-default-export': 'off',
   },
+  overrides: [
+    {
+      files: ['components/**/*.[jt]s?(x)', 'lib/**/*.[jt]s?(x)'],
+      rules: {
+        'import/no-default-export': 'error',
+      },
+    },
+  ],
 };

@@ -1,14 +1,22 @@
 import Link from 'next/link';
+import React from 'react';
 import { cn } from '@/lib/utils';
 import { MobileMenu, NavMenu } from './nav-menu';
 import { Button } from './ui/button';
 import { Icon } from './ui/icon';
 
-export function PageHeader(): JSX.Element {
+type PageHeaderProps = React.HTMLAttributes<HTMLElement>;
+
+export function PageHeader({ className }: PageHeaderProps): JSX.Element {
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-[var(--header-height,4rem)] max-w-screen-2xl items-center justify-between">
-        <div className="flex gap-6 lg:gap-9">
+    <header
+      className={cn(
+        'sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60',
+        className,
+      )}
+    >
+      <div className="container grid h-[var(--header-height)] max-w-screen-2xl auto-cols-max grid-flow-col items-center justify-between">
+        <div className="flex space-x-6 lg:space-x-9">
           <Button
             variant="link"
             className="px-0 text-xl font-semibold hover:no-underline"
@@ -18,7 +26,7 @@ export function PageHeader(): JSX.Element {
           </Button>
           <NavMenu className="hidden md:flex" />
         </div>
-        <div className="flex items-center gap-2 lg:gap-4">
+        <div className="flex space-x-2 lg:space-x-4">
           <Button
             variant="ghost"
             size="sm"
@@ -31,11 +39,12 @@ export function PageHeader(): JSX.Element {
             <span className="hidden lg:inline-flex">
               Search documentation...
             </span>
-            <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border border-input bg-muted px-1.5 font-sans text-[10px] font-medium opacity-100 md:flex">
-              <span className="text-xs">⌘</span>K
+            <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center rounded border border-input bg-muted px-1.5 font-sans text-[10px] font-medium opacity-100 md:flex md:space-x-1">
+              <span className="text-xs">⌘</span>
+              <span>K</span>
             </kbd>
           </Button>
-          <MobileMenu />
+          <MobileMenu className="md:hidden" />
           <Button asChild size="sm" className="hidden text-sm md:flex">
             <Link href="/login">Login</Link>
           </Button>

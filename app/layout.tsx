@@ -18,10 +18,10 @@ export default function RootLayout({
 }: RootLayoutProps): React.ReactElement {
   return (
     <html lang="en" className={`${fontSans.variable} ${fontMono.variable}`}>
-      <body className="min-h-screen-dvh bg-background font-sans antialiased">
+      <body className="font-sans antialiased">
         <div
           className={cn(
-            'relative flex min-h-screen-dvh flex-col bg-background',
+            'relative grid min-h-screen-dvh grid-rows-[var(--header-height)_1fr] bg-background',
             '[--header-height:4rem]',
           )}
         >

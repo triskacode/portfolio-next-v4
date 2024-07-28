@@ -1,6 +1,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { fontMono, fontSans } from '@/lib/font';
+import { cn } from '@/lib/utils';
+import { PageHeader } from '@/components/page-header';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,7 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fontSans.variable} ${fontMono.variable}`}>
       <body className="min-h-screen-dvh bg-background font-sans antialiased">
-        <div className="relative flex min-h-screen-dvh flex-col bg-background">
+        <div
+          className={cn(
+            'relative flex min-h-screen-dvh flex-col bg-background',
+            '[--header-height:4rem]',
+          )}
+        >
+          <PageHeader />
           {children}
         </div>
       </body>

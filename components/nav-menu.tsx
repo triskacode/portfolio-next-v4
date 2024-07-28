@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Button } from './ui/button';
+import { Button, type ButtonProps } from './ui/button';
 import {
   Sheet,
   SheetTrigger,
@@ -35,7 +35,7 @@ export function NavMenu({ className }: NavMenuProps): JSX.Element {
   return (
     <nav
       className={cn(
-        'flex flex-row items-center gap-x-4 text-sm lg:gap-x-6',
+        'flex items-center space-x-4 text-sm lg:space-x-6',
         className,
       )}
     >
@@ -56,7 +56,12 @@ export function NavMenu({ className }: NavMenuProps): JSX.Element {
   );
 }
 
-export function MobileMenu(): JSX.Element {
+type MobileMenuProps = ButtonProps;
+
+export function MobileMenu({
+  className,
+  ...props
+}: MobileMenuProps): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
@@ -64,7 +69,11 @@ export function MobileMenu(): JSX.Element {
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="h-9 w-9 flex-col items-center justify-center p-0 md:hidden"
+          className={cn(
+            'h-9 w-9 flex-col items-center justify-center p-0',
+            className,
+          )}
+          {...props}
         >
           <span
             className={cn(
@@ -87,30 +96,28 @@ export function MobileMenu(): JSX.Element {
         </Button>
       </SheetTrigger>
       <SheetContent
-        className="top-[var(--header-height,4rem)] h-[calc(100dvh-var(--header-height,4rem))] w-[min(80vw,360px)] focus-visible:outline-none sm:w-[540px]"
-        overlayClassName="top-[calc(var(--header-height,4rem))] h-[calc(100dvh-var(--header-height,4rem))]"
+        className="top-[var(--header-height)] h-[calc(100dvh-var(--header-height))] w-[min(90vw,360px)] focus-visible:outline-none sm:w-[540px]"
+        overlayClassName="top-[calc(var(--header-height))] h-[calc(100dvh-var(--header-height))]"
       >
         <ScreenReaderOnly>
           <SheetTitle>Navigation Menu</SheetTitle>
           <SheetDescription>Main site navigation options</SheetDescription>
         </ScreenReaderOnly>
-        <div className="-mx-6 flex h-full flex-col justify-between gap-y-6">
+        <div className="grid h-full auto-rows-max grid-cols-1 content-between gap-y-6">
           <NavMenu
             className={cn(
-              'flex-col items-stretch gap-y-2',
+              '-mx-6 flex-none flex-col items-stretch space-x-0 space-y-2',
               '[&>a]:justify-start [&>a]:px-6 [&>a]:text-base',
             )}
           />
-          <div className="px-6">
-            <div className="rounded-md border px-3 py-2">
-              <Button asChild className="w-full text-sm">
-                <Link href="/login">Login</Link>
-              </Button>
-              <p className="mt-2 text-xs text-muted-foreground">
-                Login to comment on blog posts, and stay updated on my latest
-                work and join the discussion!
-              </p>
-            </div>
+          <div className="mt-auto rounded-md border px-3 py-2">
+            <Button asChild className="w-full text-sm">
+              <Link href="/login">Login</Link>
+            </Button>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Login to comment on blog posts, and stay updated on my latest work
+              and join the discussion!
+            </p>
           </div>
         </div>
       </SheetContent>

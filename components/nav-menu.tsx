@@ -96,21 +96,21 @@ export function MobileMenu({
         </Button>
       </SheetTrigger>
       <SheetContent
-        className="top-[var(--header-height)] h-[calc(100dvh-var(--header-height))] w-[min(90vw,360px)] focus-visible:outline-none sm:w-[540px]"
+        className="top-[var(--header-height)] h-[calc(100dvh-var(--header-height))] w-[min(85vw,360px)] p-0 focus-visible:outline-none sm:w-[540px]"
         overlayClassName="top-[calc(var(--header-height))] h-[calc(100dvh-var(--header-height))]"
       >
         <ScreenReaderOnly>
           <SheetTitle>Navigation Menu</SheetTitle>
           <SheetDescription>Main site navigation options</SheetDescription>
         </ScreenReaderOnly>
-        <div className="grid h-full auto-rows-max grid-cols-1 content-between gap-y-6">
+        <div className="scroller grid h-full grid-flow-row auto-rows-max content-between gap-y-6 overflow-y-auto p-6">
           <NavMenu
             className={cn(
               '-mx-6 flex-none flex-col items-stretch space-x-0 space-y-2',
               '[&>a]:justify-start [&>a]:px-6 [&>a]:text-base',
             )}
           />
-          <div className="mt-auto rounded-md border px-3 py-2">
+          <div className="-mx-3 mt-auto rounded-md border px-3 py-2">
             <Button asChild className="w-full text-sm">
               <Link href="/login">Login</Link>
             </Button>

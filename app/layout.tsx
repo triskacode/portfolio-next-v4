@@ -1,7 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { fontMono, fontSans } from '@/lib/font';
-import { cn } from '@/lib/utils';
 import { PageHeader } from '@/components/page-header';
 
 export const metadata: Metadata = {
@@ -19,12 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fontSans.variable} ${fontMono.variable}`}>
       <body className="font-sans antialiased">
-        <div
-          className={cn(
-            'relative grid min-h-screen-dvh grid-rows-[var(--header-height)_1fr] bg-background',
-            '[--header-height:4rem]',
-          )}
-        >
+        <div className="relative grid min-h-screen-dvh grid-rows-[var(--header-height)_1fr] bg-background">
           <PageHeader />
           {children}
         </div>

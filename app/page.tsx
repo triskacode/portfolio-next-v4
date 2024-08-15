@@ -129,7 +129,7 @@ export default function Home(): JSX.Element {
           </div>
         </div>
         {/* contact section */}
-        <div className="order-first flex items-center justify-center lg:order-none lg:py-[calc(var(--y-padding)/2)]">
+        <div className="flex items-center justify-center lg:py-[calc(var(--y-padding)/2)]">
           <div className="flex h-full max-w-2xl flex-col items-center justify-between gap-6 justify-self-center rounded-md border p-[var(--y-padding)] lg:col-span-2 lg:items-start lg:justify-self-start lg:p-[calc(var(--y-padding)/2)]">
             {/* contact section intro  */}
             <div className="text-balance text-center text-base lg:text-start">

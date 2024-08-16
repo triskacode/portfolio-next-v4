@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { fontMono, fontSans } from '@/lib/font';
 import { PageHeader } from '@/components/page-header';
+import { PageFooter } from '@/components/page-footer';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -21,6 +22,7 @@ export default function RootLayout({
         <div className="relative grid min-h-screen-dvh grid-rows-[var(--header-height)_1fr] bg-background">
           <PageHeader />
           {children}
+          <PageFooter />
         </div>
       </body>
     </html>

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { fontMono, fontSans } from '@/lib/font';
 import { PageHeader } from '@/components/page-header';
 import { PageFooter } from '@/components/page-footer';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,13 +18,24 @@ export default function RootLayout({
   children,
 }: RootLayoutProps): React.ReactElement {
   return (
-    <html lang="en" className={`${fontSans.variable} ${fontMono.variable}`}>
+    <html
+      lang="en"
+      className={`${fontSans.variable} ${fontMono.variable}`}
+      suppressHydrationWarning
+    >
       <body className="font-sans antialiased">
-        <div className="relative grid min-h-screen-dvh grid-rows-[var(--header-height)_1fr] bg-background">
-          <PageHeader />
-          {children}
-          <PageFooter />
-        </div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="relative grid min-h-screen-dvh grid-rows-[var(--header-height)_1fr] bg-background">
+            <PageHeader />
+            {children}
+            <PageFooter />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

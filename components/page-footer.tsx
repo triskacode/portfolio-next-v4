@@ -20,7 +20,7 @@ export function PageFooter({
       )}
       {...props}
     >
-      <div className="mx-auto grid w-full max-w-2xl grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-8 px-4 md:max-w-3xl md:px-8 lg:max-w-5xl lg:grid-cols-6 xl:max-w-7xl">
+      <div className="mx-auto grid w-full max-w-2xl grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-x-8 gap-y-10 px-4 md:max-w-3xl md:px-8 lg:max-w-5xl lg:grid-cols-6 xl:max-w-7xl">
         <div className="col-span-full flex w-full flex-row items-center justify-between gap-4 lg:col-span-2 lg:flex-col lg:items-start lg:justify-start">
           <Button
             variant="link"

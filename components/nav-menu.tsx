@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button, type ButtonProps } from './ui/button';
 import {
@@ -16,12 +16,12 @@ import { ScreenReaderOnly } from './ui/screen-reader-only';
 
 const links = [
   {
-    label: 'Blog',
-    href: '/blog',
-  },
-  {
     label: 'Project',
     href: '/project',
+  },
+  {
+    label: 'Blog',
+    href: '/blog',
   },
 ];
 
@@ -34,18 +34,16 @@ export function NavMenu({ className }: NavMenuProps): JSX.Element {
 
   return (
     <nav
-      className={cn(
-        'flex items-center space-x-4 text-sm lg:space-x-6',
-        className,
-      )}
+      className={cn('flex items-center gap-x-4 text-sm lg:gap-x-6', className)}
     >
       {links.map((link) => (
         <Button
           key={link.href}
           asChild
+          size="sm"
           variant="link"
           className={cn(
-            'px-0 font-normal text-foreground/60 transition-colors hover:text-foreground/80',
+            'px-1 font-normal text-foreground/60 transition-colors hover:text-foreground/80',
             { 'text-foreground': pathname === link.href },
           )}
         >
@@ -62,7 +60,12 @@ export function MobileMenu({
   className,
   ...props
 }: MobileMenuProps): JSX.Element {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   return (
     <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -96,27 +99,29 @@ export function MobileMenu({
         </Button>
       </SheetTrigger>
       <SheetContent
-        className="top-[var(--header-height)] h-[calc(100dvh-var(--header-height))] w-[min(85vw,360px)] p-0 focus-visible:outline-none sm:w-[540px]"
+        className="top-[var(--header-height)] h-[calc(100dvh-var(--header-height))] w-[min(85vw,360px)] border-none p-0 focus-visible:outline-none sm:w-[540px]"
         overlayClassName="top-[calc(var(--header-height))] h-[calc(100dvh-var(--header-height))]"
       >
         <ScreenReaderOnly>
-          <SheetTitle>Navigation Menu</SheetTitle>
-          <SheetDescription>Main site navigation options</SheetDescription>
+          <SheetTitle>Portfolio Navigation</SheetTitle>
+          <SheetDescription>
+            Explore the portfolio of a Fullstack Developer
+          </SheetDescription>
         </ScreenReaderOnly>
-        <div className="scroller grid h-full grid-flow-row auto-rows-max content-between gap-y-6 overflow-y-auto p-6">
+        <div className="scroller grid h-full grid-flow-row auto-rows-max content-between gap-y-4 overflow-y-auto p-4">
           <NavMenu
             className={cn(
-              '-mx-6 flex-none flex-col items-stretch space-x-0 space-y-2',
-              '[&>a]:justify-start [&>a]:px-6 [&>a]:text-base',
+              '-mx-4 flex-none flex-col items-stretch gap-x-0 gap-y-2',
+              '[&>a]:justify-start [&>a]:px-4 [&>a]:text-base',
             )}
           />
-          <div className="-mx-3 mt-auto rounded-md border px-3 py-2">
+          <div className="mt-auto flex flex-col items-start justify-center gap-2 rounded-md border p-2">
             <Button asChild className="w-full text-sm">
               <Link href="/login">Login</Link>
             </Button>
-            <p className="mt-2 text-xs text-muted-foreground">
-              Login to comment on blog posts, and stay updated on my latest work
-              and join the discussion!
+            <p className="text-xs text-muted-foreground">
+              Access your account to view exclusive Fullstack Developer case
+              studies and project insights.
             </p>
           </div>
         </div>

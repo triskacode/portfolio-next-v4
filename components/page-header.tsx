@@ -15,18 +15,19 @@ export function PageHeader({ className }: PageHeaderProps): JSX.Element {
         className,
       )}
     >
-      <div className="container grid h-[var(--header-height)] max-w-screen-2xl auto-cols-max grid-flow-col items-center justify-between">
-        <div className="flex space-x-6 lg:space-x-9">
+      <div className="mx-auto grid h-[var(--header-height)] max-w-screen-2xl auto-cols-max grid-flow-col items-center justify-between px-4 md:px-8">
+        <div className="flex gap-6 lg:gap-10">
           <Button
+            size="sm"
             variant="link"
-            className="px-0 text-xl font-semibold hover:no-underline"
+            className="px-1 text-xl font-semibold hover:no-underline"
             asChild
           >
             <Link href="/">_triskacode</Link>
           </Button>
           <NavMenu className="hidden md:flex" />
         </div>
-        <div className="flex space-x-2 lg:space-x-4">
+        <div className="flex gap-2 lg:gap-4">
           <Button
             variant="ghost"
             size="sm"
@@ -45,7 +46,7 @@ export function PageHeader({ className }: PageHeaderProps): JSX.Element {
             </kbd>
           </Button>
           <MobileMenu className="md:hidden" />
-          <Button asChild size="sm" className="hidden text-sm md:flex">
+          <Button asChild size="sm" className="hidden md:flex">
             <Link href="/login">Login</Link>
           </Button>
         </div>

@@ -1,4 +1,7 @@
+import '@/styles/mdx.css';
 import { cn } from '@/lib/utils';
+import { about } from '#site/content';
+import { MDXContent } from '@/components/mdx-content';
 
 export default function About(): React.JSX.Element {
   return (
@@ -13,11 +16,13 @@ export default function About(): React.JSX.Element {
           {/* intro */}
           <div className="flex flex-col items-start justify-start">
             <h1 className="text-balance text-start text-4xl/none font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Triska Mahfud Khoiri
+              {about.personalInfo.name}
             </h1>
           </div>
         </div>
-        <div className="min-h-dvh" />
+        <div className="w-full max-w-lg justify-self-center">
+          <MDXContent code={about.content} />
+        </div>
       </section>
     </main>
   );

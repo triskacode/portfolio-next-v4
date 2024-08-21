@@ -1,4 +1,4 @@
-import './globals.css';
+import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { fontMono, fontSans } from '@/lib/font';
 import { PageHeader } from '@/components/page-header';

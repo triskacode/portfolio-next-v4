@@ -1,3 +1,4 @@
+import '@/styles/mdx.css';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -79,7 +80,7 @@ export default function Page({ params }: PageProps): React.JSX.Element {
         <hr />
         <div className="flex flex-row items-center justify-between gap-4">
           <div>
-            <Button variant="ghost" asChild>
+            <Button variant="outline" asChild>
               <Link href="/blog">
                 <Icon.Lucide name="chevron-left" className="mr-2 size-4" />
                 See all posts

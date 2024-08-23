@@ -53,7 +53,7 @@ export default function Page({ params }: PageProps): React.JSX.Element {
               className="text-muted-foreground"
             >
               {formatDate(post.updated ?? post.date)}
-              {post.updated ? ' (Updated)' : ' (Updated)'}
+              {post.updated ? ' (Updated)' : ''}
             </time>
             <span className="text-muted-foreground odd:hidden">·</span>
             <span className="text-muted-foreground">

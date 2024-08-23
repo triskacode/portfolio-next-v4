@@ -31,12 +31,13 @@ export function ShareButton({
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="icon"
       onClick={() => void handleShare()}
       {...props}
     >
       <Icon.Lucide name="share-2" className="size-4" />
+      <span className="sr-only">Share</span>
     </Button>
   );
 }
@@ -50,8 +51,9 @@ export function ScrollToTopButton(props: ButtonProps): React.JSX.Element {
   };
 
   return (
-    <Button variant="ghost" size="icon" onClick={scrollToTop} {...props}>
+    <Button variant="outline" size="icon" onClick={scrollToTop} {...props}>
       <Icon.Lucide name="arrow-up" className="size-4" />
+      <span className="sr-only">Scroll to top</span>
     </Button>
   );
 }

@@ -3,8 +3,9 @@ import { ProjectCard } from '@/components/project-card';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
-import { posts, projects } from '@/lib/placeholder-data';
+import { projects } from '@/lib/placeholder-data';
 import { cn } from '@/lib/utils';
+import { posts } from '#site/content';
 
 export default function Home(): JSX.Element {
   return (
@@ -97,9 +98,9 @@ export default function Home(): JSX.Element {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-subgrid gap-8 md:col-span-2 lg:col-span-3">
+        <div className="grid grid-cols-subgrid gap-y-10 md:col-span-2 md:gap-x-8 lg:col-span-3">
           {posts.slice(0, 3).map((post) => (
-            <PostCard key={post.id} post={post} />
+            <PostCard key={post.slug} post={post} />
           ))}
         </div>
       </section>

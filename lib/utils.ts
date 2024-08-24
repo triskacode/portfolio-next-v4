@@ -27,3 +27,9 @@ export function formatTime(minutes: number): string {
   }
   return `${hours.toString()} hour${hours > 1 ? 's' : ''} ${remainingMinutes.toString()} min`;
 }
+
+/** @see https://github.com/sindresorhus/is-absolute-url/blob/main/index.js */
+export function isAbsoluteUrl(url: string): boolean {
+  const absoluteUrlRegex = /^[a-zA-Z][a-zA-Z\d+\-.]*?:/;
+  return absoluteUrlRegex.test(url);
+}

@@ -1,5 +1,5 @@
 import * as runtime from 'react/jsx-runtime';
-import Image from 'next/image';
+import Image, { type ImageProps } from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Callout } from './callout';
@@ -69,7 +69,7 @@ const sharedComponents = {
   td: Td,
   pre: Pre,
   code: Code,
-  Image,
+  Image: StyledImage,
   Callout,
 };
 
@@ -280,6 +280,15 @@ function Code({
         'relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm',
         className,
       )}
+      {...props}
+    />
+  );
+}
+
+function StyledImage(props: ImageProps): React.JSX.Element {
+  return (
+    <Image
+      className="rounded-md border bg-muted transition-colors"
       {...props}
     />
   );

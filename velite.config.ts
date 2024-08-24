@@ -1,6 +1,7 @@
 import rehypeSlug from 'rehype-slug';
 import { rehypePrettyCode } from 'rehype-pretty-code';
 import { defineCollection, defineConfig, defineSchema, s } from 'velite';
+import { remarkBlurNextImage } from './lib/remark/remark-blur-next-image';
 
 const withSlugParams = <T extends { slug: string }>(
   data: T,
@@ -86,6 +87,7 @@ export default defineConfig({
   },
   collections: { about, posts },
   mdx: {
+    remarkPlugins: [[remarkBlurNextImage]],
     rehypePlugins: [rehypeSlug, [rehypePrettyCode, { theme: 'github-dark' }]],
   },
 });

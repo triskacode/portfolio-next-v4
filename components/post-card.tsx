@@ -51,7 +51,7 @@ export function PostCard({
           <dt className="sr-only">Title</dt>
           <dd className="line-clamp-2 w-full text-xl font-semibold tracking-tight md:text-2xl">
             <Link
-              href={`/blog/${post.slug}`}
+              href={post.slug}
               className="hover:text-blue-500"
               aria-label={post.title}
             >

@@ -107,8 +107,9 @@ function Headings({
       <Link href={`#${id ?? ''}`} className="lg:-ml-2 lg:pl-2">
         <Button
           variant="ghost"
-          className="absolute -left-8 top-1/2 size-6 -translate-y-1/2 transform p-0 opacity-0 group-hover:opacity-100"
+          className="absolute -left-8 top-1/2 hidden size-6 -translate-y-1/2 transform p-0 opacity-0 group-hover:opacity-100 md:flex"
         >
+          <span className="sr-only">Anchor link for {children}</span>
           <Icon.Lucide name="hash" className="size-4" />
         </Button>
         {children}

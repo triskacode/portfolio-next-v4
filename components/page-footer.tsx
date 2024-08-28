@@ -27,18 +27,24 @@ export function PageFooter({
             className="px-1 text-xl font-semibold hover:no-underline lg:-mt-2"
             asChild
           >
-            <Link href="/">_triskacode</Link>
+            <Link href="/">
+              <span className="sr-only">Brand logo for Triskacode</span>
+              _triskacode
+            </Link>
           </Button>
           <div className="flex items-center justify-start gap-2">
             <Button variant="outline" size="icon" asChild>
               <Link href="https://github.com/triskacode" target="_blank">
+                <span className="sr-only">GitHub profile</span>
                 <Icon.GitHub className="h-4 w-4" />
               </Link>
             </Button>
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <h4 className="text-sm font-semibold">Resources</h4>
+          <div className="text-sm font-semibold">
+            <p>Resources</p>
+          </div>
           <ul className="flex flex-col gap-2 text-sm">
             <li>
               <Link href="/">Home</Link>
@@ -52,7 +58,9 @@ export function PageFooter({
           </ul>
         </div>
         <div className="flex flex-col gap-4">
-          <h4 className="text-sm font-semibold">More</h4>
+          <div className="text-sm font-semibold">
+            <p>More</p>
+          </div>
           <ul className="flex flex-col gap-2 text-sm">
             <li>
               <Link href="/about">About Triskacode</Link>
@@ -68,7 +76,9 @@ export function PageFooter({
           </ul>
         </div>
         <div className="col-span-full flex w-full max-w-sm flex-col gap-4 md:col-span-2">
-          <h4 className="text-sm font-semibold">Subscribe to our newsletter</h4>
+          <div className="text-sm font-semibold">
+            <p>Subscribe to our newsletter</p>
+          </div>
           <div className="flex flex-col items-start justify-start gap-2">
             <div className="text-start text-sm">
               <p>
@@ -104,19 +114,3 @@ export function PageFooter({
     </footer>
   );
 }
-
-/**
- "Hi AI, I need assistance in filling out the content layout for my personal portfolio blog landing page that is already set up in the code editor. Please help me by providing text for each of the following sections. Ensure that the text is engaging, unique, optimized for SEO, and appropriate for the context below:
-
-- Footer Section:
-  - Purpose: Provide a nice and engaging footer section for the blog landing page. including the relevant primary keyword (if applicable).
-  - Details: Write a title and link text that will be displayed in the footer section of the blog landing page.
-
-SEO Notes:
-  - This is my primary keyword "Fullstack Developer" and my secondary keyword "Fullstack Developer Case Study Experience".
-  - Ensure to include the primary and secondary keywords naturally in each section.
-  - Use variations of keywords and related phrases to enhance search relevance.
-  - Include internal linking if there are other relevant pages on your site connected to the displayed content.
-
-Thank you for helping to make my landing page content informative, engaging, and SEO-friendly!" 
- */

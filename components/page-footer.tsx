@@ -104,15 +104,9 @@ export function PageFooter({
             <ul className="flex flex-col gap-2">
               {links.map(({ text, href, target }) => (
                 <li key={text}>
-                  <Button
-                    variant="link"
-                    className="justify-start px-0 text-sm hover:no-underline"
-                    asChild
-                  >
-                    <Link href={href} target={target}>
-                      {text}
-                    </Link>
-                  </Button>
+                  <Link href={href} target={target}>
+                    {text}
+                  </Link>
                 </li>
               ))}
             </ul>

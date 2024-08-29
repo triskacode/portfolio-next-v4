@@ -7,6 +7,53 @@ import { LightDarkThemeSwitcher } from './light-dark-theme-switcher';
 
 type PageFooterProps = React.HTMLAttributes<HTMLElement>;
 
+interface FooterLink {
+  title: string;
+  links: {
+    text: string;
+    href: string;
+    target?: '_blank' | '_self' | '_parent' | '_top' | undefined;
+  }[];
+}
+
+const footerLinks: FooterLink[] = [
+  {
+    title: 'Resources',
+    links: [
+      {
+        text: 'Home',
+        href: '/',
+      },
+      {
+        text: 'Project',
+        href: '/project',
+      },
+      {
+        text: 'Blog',
+        href: '/blog',
+      },
+    ],
+  },
+  {
+    title: 'More',
+    links: [
+      {
+        text: 'About Triskacode',
+        href: '/about',
+      },
+      {
+        text: 'Contact',
+        href: '/contact',
+      },
+      {
+        text: 'Github',
+        href: 'https://github.com/triskacode',
+        target: '_blank',
+      },
+    ],
+  },
+];
+
 export function PageFooter({
   className,
   ...props
@@ -28,12 +75,22 @@ export function PageFooter({
             asChild
           >
             <Link href="/">
-              <span className="sr-only">Brand logo for Triskacode</span>
+              <span
+                className="sr-only"
+                aria-label="Link to Triskacode's homepage"
+              >
+                Brand logo for Triskacode
+              </span>
               _triskacode
             </Link>
           </Button>
           <div className="flex items-center justify-start gap-2">
-            <Button variant="outline" size="icon" asChild>
+            <Button
+              asChild
+              variant="outline"
+              size="icon"
+              aria-label="Link to Triskacode's GitHub profile"
+            >
               <Link href="https://github.com/triskacode" target="_blank">
                 <span className="sr-only">GitHub profile</span>
                 <Icon.GitHub className="h-4 w-4" />
@@ -41,40 +98,20 @@ export function PageFooter({
             </Button>
           </div>
         </div>
-        <div className="flex flex-col gap-4">
-          <div className="text-sm font-semibold">
-            <p>Resources</p>
+        {footerLinks.map(({ title, links }) => (
+          <div key={title} className="flex flex-col gap-4 text-sm">
+            <div className="font-semibold">{title}</div>
+            <ul className="flex flex-col gap-2">
+              {links.map(({ text, href, target }) => (
+                <li key={text}>
+                  <Link href={href} target={target}>
+                    {text}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="flex flex-col gap-2 text-sm">
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/project">Project</Link>
-            </li>
-            <li>
-              <Link href="/blog">Blog</Link>
-            </li>
-          </ul>
-        </div>
-        <div className="flex flex-col gap-4">
-          <div className="text-sm font-semibold">
-            <p>More</p>
-          </div>
-          <ul className="flex flex-col gap-2 text-sm">
-            <li>
-              <Link href="/about">About Triskacode</Link>
-            </li>
-            <li>
-              <Link href="/contact">Contact</Link>
-            </li>
-            <li>
-              <Link href="https://github.com/triskacode" target="_blank">
-                Github
-              </Link>
-            </li>
-          </ul>
-        </div>
+        ))}
         <div className="col-span-full flex w-full max-w-sm flex-col gap-4 md:col-span-2">
           <div className="text-sm font-semibold">
             <p>Subscribe to our newsletter</p>

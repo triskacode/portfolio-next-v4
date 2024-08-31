@@ -20,6 +20,14 @@ const meta = defineSchema(() =>
   }),
 );
 
+const projectLink = defineSchema(() =>
+  s.object({
+    displayName: s.string().max(72),
+    kind: s.enum(['github', 'gitlab', 'bitbucket', 'website']),
+    url: s.string().url(),
+  }),
+);
+
 const personalInfo = defineSchema(() =>
   s.object({
     name: s.string().max(30).optional(),
@@ -48,6 +56,22 @@ const about = defineCollection({
     updated: s.isodate().optional(),
     toc: s.toc(),
     content: s.mdx(),
+  }),
+});
+
+const projects = defineCollection({
+  name: 'Project',
+  pattern: 'projects/*.yml',
+  schema: s.object({
+    displayName: s.string().max(100),
+    slug: s.path(),
+    description: s.string().max(250),
+    date: s.isodate(),
+    technologies: s.array(s.string()),
+    links: s.object({
+      repository: projectLink().optional(),
+      live: projectLink().optional(),
+    }),
   }),
 });
 
@@ -85,7 +109,7 @@ export default defineConfig({
     name: '[name]-[hash:8].[ext]',
     clean: true,
   },
-  collections: { about, posts },
+  collections: { about, projects, posts },
   mdx: {
     remarkPlugins: [[remarkBlurNextImage]],
     rehypePlugins: [rehypeSlug, [rehypePrettyCode, { theme: 'github-dark' }]],

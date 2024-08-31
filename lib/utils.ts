@@ -15,6 +15,14 @@ export function formatDate(input: string | number): string {
   });
 }
 
+export function formatYear(input: string | number): string {
+  const date = new Date(input);
+
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+  });
+}
+
 export function formatTime(minutes: number): string {
   if (minutes < 60) {
     return `${minutes.toString()} min`;

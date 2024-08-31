@@ -1,0 +1,17 @@
+displayName: portfolio next v4
+description: My portfolio website built with NextJs and Tailwind CSS.
+date: 2024-08-30
+technologies:
+  - NextJs
+  - TailwindCSS
+  - Velite
+  - Vercel
+links:
+  repository:
+    kind: github
+    displayName: triskacode/portfolio-next-v4
+    url: https://github.com/triskacode/portfolio-next-v4
+  live:
+    kind: website
+    displayName: triskacode.my.id
+    url: https://triskacode.my.id

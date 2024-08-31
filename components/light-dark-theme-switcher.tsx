@@ -63,10 +63,9 @@ function LightDarkThemeSwitcherComponent(): React.JSX.Element {
             id={option.id}
             value={option.value}
             className="peer sr-only"
-          >
-            {option.label}
-          </RadioGroupItem>
+          />
           <ThemeSwitchLabel htmlFor={option.id}>
+            <span className="sr-only">{option.label}</span>
             <Icon.Lucide name={option.icon} className="h-4 w-4" />
           </ThemeSwitchLabel>
         </div>

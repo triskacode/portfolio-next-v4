@@ -12,7 +12,7 @@ export default function About(): React.JSX.Element {
           '[--y-padding:theme(spacing.8)] md:[--y-padding:theme(spacing.16)]',
         )}
       >
-        <div className="flex flex-col items-stretch justify-start gap-4 self-start md:sticky md:top-[calc(var(--header-height)+var(--y-padding))] md:gap-6">
+        <div className="flex max-w-xl flex-col items-stretch justify-start gap-4 self-start justify-self-center md:gap-6 lg:sticky lg:top-[calc(var(--header-height)+var(--y-padding))] lg:max-w-full lg:justify-self-start">
           {/* intro */}
           <div className="flex flex-col items-start justify-start">
             <h1 className="text-balance text-start text-4xl/none font-bold tracking-tight md:text-5xl lg:text-6xl">
@@ -27,7 +27,7 @@ export default function About(): React.JSX.Element {
             </p>
           </div>
         </div>
-        <div className="w-full max-w-lg justify-self-center">
+        <div className="w-full max-w-xl justify-self-center">
           <MDXContent code={about.content} />
         </div>
       </section>

@@ -1,0 +1,29 @@
+- key: typescript
+  displayName: TypeScript
+
+- key: javascript
+  displayName: JavaScript
+
+- key: nextjs
+  displayName: Next.js
+
+- key: react
+  displayName: React
+
+- key: tailwindcss
+  displayName: TailwindCSS
+
+- key: nodejs
+  displayName: Node.js
+
+- key: expressjs
+  displayName: Express.js
+
+- key: nestjs
+  displayName: Nest.js
+
+- key: golang
+  displayName: Go
+
+- key: fiber
+  displayName: Fiber

@@ -45,6 +45,17 @@ const personalInfo = defineSchema(() =>
   }),
 );
 
+const technologyKey = defineSchema(() => s.string().regex(/^[a-z0-9-.]+$/));
+
+const technologies = defineCollection({
+  name: 'Technology',
+  pattern: 'technologies/index.yml',
+  schema: s.object({
+    key: technologyKey(),
+    displayName: s.string().max(30),
+  }),
+});
+
 const about = defineCollection({
   name: 'About',
   pattern: 'about/index.mdx',
@@ -109,7 +120,7 @@ export default defineConfig({
     name: '[name]-[hash:8].[ext]',
     clean: true,
   },
-  collections: { about, projects, posts },
+  collections: { technologies, about, projects, posts },
   mdx: {
     remarkPlugins: [[remarkBlurNextImage]],
     rehypePlugins: [rehypeSlug, [rehypePrettyCode, { theme: 'github-dark' }]],

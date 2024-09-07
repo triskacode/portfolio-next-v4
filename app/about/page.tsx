@@ -2,6 +2,11 @@ import '@/styles/mdx.css';
 import { cn } from '@/lib/utils';
 import { about } from '#site/content';
 import { MDXContent } from '@/components/mdx-content';
+import Technologies from './technologies';
+
+const components = {
+  Technologies,
+};
 
 export default function About(): React.JSX.Element {
   return (
@@ -28,7 +33,7 @@ export default function About(): React.JSX.Element {
           </div>
         </div>
         <div className="w-full max-w-xl justify-self-center">
-          <MDXContent code={about.content} />
+          <MDXContent code={about.content} components={components} />
         </div>
       </section>
     </main>

@@ -45,7 +45,7 @@ const personalInfo = defineSchema(() =>
   }),
 );
 
-const technologyKey = defineSchema(() => s.string().toLowerCase());
+const technologyKey = defineSchema(() => s.string().regex(/^[a-z0-9-.]+$/));
 
 const technologies = defineCollection({
   name: 'Technology',

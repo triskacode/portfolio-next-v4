@@ -2,10 +2,15 @@ import '@/styles/mdx.css';
 import { cn } from '@/lib/utils';
 import { about } from '#site/content';
 import { MDXContent } from '@/components/mdx-content';
+import { Timeline, TimelineGroup } from '@/components/timeline';
+import { Icon } from '@/components/ui/icon';
 import Technologies from './technologies';
 
 const components = {
   Technologies,
+  TimelineGroup,
+  Timeline,
+  Icon,
 };
 
 export default function About(): React.JSX.Element {
@@ -32,7 +37,7 @@ export default function About(): React.JSX.Element {
             </p>
           </div>
         </div>
-        <div className="w-full max-w-xl justify-self-center">
+        <div className="w-full max-w-xl justify-self-center [&>h2:first-child]:block lg:[&>h2:first-child]:hidden">
           <MDXContent code={about.content} components={components} />
         </div>
       </section>

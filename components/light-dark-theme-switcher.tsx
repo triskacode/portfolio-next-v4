@@ -49,6 +49,7 @@ function LightDarkThemeSwitcherComponent(): React.JSX.Element {
     <RadioGroup
       className="flex flex-row items-center justify-center gap-0 rounded-full border p-0.5 focus-within:ring-1 focus-within:ring-ring"
       defaultValue={theme}
+      value={theme}
       onValueChange={(value) => {
         setTheme(value);
       }}

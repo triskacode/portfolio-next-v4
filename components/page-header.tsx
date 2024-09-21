@@ -3,7 +3,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { MobileMenu, NavMenu } from './nav-menu';
 import { Button } from './ui/button';
-import { Icon } from './ui/icon';
+import { SearchCommand } from './search-command';
 
 type PageHeaderProps = React.HTMLAttributes<HTMLElement>;
 
@@ -28,23 +28,7 @@ export function PageHeader({ className }: PageHeaderProps): JSX.Element {
           <NavMenu className="hidden md:flex" />
         </div>
         <div className="flex gap-2 lg:gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            className={cn(
-              'relative h-9 w-9 p-0 text-sm font-normal shadow-none md:h-8 md:w-40 md:justify-start md:border md:border-input md:pl-3 md:pr-12 md:text-muted-foreground lg:w-64',
-            )}
-          >
-            <Icon.Lucide name="search" className="h-6 md:hidden" />
-            <span className="hidden md:inline-flex lg:hidden">Search...</span>
-            <span className="hidden lg:inline-flex">
-              Search documentation...
-            </span>
-            <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center rounded border border-input bg-muted px-1.5 font-sans text-[10px] font-medium opacity-100 md:flex md:space-x-1">
-              <span className="text-xs">⌘</span>
-              <span>K</span>
-            </kbd>
-          </Button>
+          <SearchCommand />
           <MobileMenu className="md:hidden" />
           <Button asChild size="sm" className="hidden md:flex">
             <Link href="/login">Login</Link>

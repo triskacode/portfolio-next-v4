@@ -2,6 +2,7 @@ import rehypeSlug from 'rehype-slug';
 import { rehypePrettyCode } from 'rehype-pretty-code';
 import { defineCollection, defineConfig, defineSchema, s } from 'velite';
 import { remarkBlurNextImage } from './lib/remark/remark-blur-next-image';
+import { transformToSearchableToc } from './lib/toc';
 
 const withSlugParams = <T extends { slug: string }>(
   data: T,
@@ -110,6 +111,18 @@ const posts = defineCollection({
     .transform(withSlugParams),
 });
 
+const searchPostIndex = defineCollection({
+  name: 'SearchPostIndex',
+  pattern: 'blog/**/*.mdx',
+  schema: s
+    .object({
+      title: s.string().max(100),
+      url: s.path().transform((url) => `/${url}`),
+      items: s.toc(),
+    })
+    .transform(transformToSearchableToc),
+});
+
 export default defineConfig({
   strict: process.env.NODE_ENV === 'production',
   root: 'content',
@@ -120,7 +133,7 @@ export default defineConfig({
     name: '[name]-[hash:8].[ext]',
     clean: true,
   },
-  collections: { technologies, about, projects, posts },
+  collections: { technologies, about, projects, posts, searchPostIndex },
   mdx: {
     remarkPlugins: [[remarkBlurNextImage]],
     rehypePlugins: [rehypeSlug, [rehypePrettyCode, { theme: 'github-dark' }]],

@@ -17,8 +17,10 @@ import {
   SunIcon,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import { getSearchIndex } from '@/lib/search-index';
 import { Button } from './ui/button';
 import { Dialog, DialogTitle, PlainDialogContent } from './ui/dialog';
 import { Drawer, DrawerContent } from './ui/drawer';
@@ -32,10 +34,12 @@ import {
 } from './ui/command';
 
 export function SearchCommand(): JSX.Element {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [pages, setPages] = useState<string[]>([]);
   const page = pages[pages.length - 1];
+  const searchIndex = getSearchIndex();
 
   const handleOpen = (state: boolean) => () => {
     setOpen(state);
@@ -107,16 +111,40 @@ export function SearchCommand(): JSX.Element {
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandList className="min-h-48 md:h-auto">
             {!page && (
-              <CommandGroup heading="General">
-                <CommandItem
-                  icon={<MonitorIcon />}
-                  onSelect={moveToNextPage('change-theme')}
-                >
-                  Change Theme...
-                </CommandItem>
+              <>
+                {searchIndex.map((searchGroup, i) => (
+                  <CommandGroup key={i} heading={searchGroup.title}>
+                    {searchGroup.items?.length
+                      ? searchGroup.items.map((item, j) => (
+                          <CommandItem
+                            key={j}
+                            {...(item.url
+                              ? {
+                                  onSelect: () => {
+                                    run(() => {
+                                      router.push(item.url ?? '');
+                                    });
+                                  },
+                                }
+                              : {})}
+                          >
+                            {item.title}
+                          </CommandItem>
+                        ))
+                      : null}
+                  </CommandGroup>
+                ))}
+                <CommandGroup heading="General">
+                  <CommandItem
+                    icon={<MonitorIcon />}
+                    onSelect={moveToNextPage('change-theme')}
+                  >
+                    Change Theme...
+                  </CommandItem>
 
-                {search ? <ChangeThemeCommandList runCommand={run} /> : null}
-              </CommandGroup>
+                  {search ? <ChangeThemeCommandList runCommand={run} /> : null}
+                </CommandGroup>
+              </>
             )}
             {page === 'change-theme' && (
               <CommandGroup>

@@ -2,29 +2,37 @@ import { searchPostIndex } from '#site/content'
 import { getHeaderNavLinks, type Link } from './navigation'
 
 export type SearchItem = Link & {
+  items: SearchItem[]
+  type: 'page' | 'content-id'
   icon?: string
   disabled?: boolean
   external?: boolean
 }
 
-export type SearchGroup = Partial<SearchItem> & {
-  title: SearchItem['title']
-  type?: 'group' | 'page' | 'content-id'
-  items?: SearchGroup[]
+export interface SearchGroup {
+  type: 'group'
+  title: string
+  items: SearchItem[]
 }
 
-export function getSearchIndex(): SearchGroup[] {
-  return [
-    {
+export interface SearchIndex {
+  navigation: SearchGroup
+  posts: SearchGroup
+}
+
+export function getSearchIndex(): SearchIndex {
+  return {
+    navigation: {
       title: 'Navigation',
       type: 'group',
       items: getHeaderNavLinks().map(link => ({
         type: 'page',
         title: link.title,
         url: link.url,
+        items: [],
       })),
     },
-    {
+    posts: {
       title: 'Posts',
       type: 'group',
       items: searchPostIndex.map(post => ({
@@ -35,8 +43,9 @@ export function getSearchIndex(): SearchGroup[] {
           type: 'content-id',
           title: item.title,
           url: item.url,
+          items: [],
         })),
       })),
     },
-  ]
+  }
 }

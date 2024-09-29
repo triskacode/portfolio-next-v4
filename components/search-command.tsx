@@ -1,15 +1,16 @@
 'use client'
 
+import type { SearchItem } from '@/lib/search-index'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { getSearchIndex } from '@/lib/search-index'
 import { cn } from '@/lib/utils'
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
+  FileTextIcon,
+  HashIcon,
   MonitorIcon,
-  MoonIcon,
   SearchIcon,
-  SunIcon,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
@@ -19,8 +20,10 @@ import {
   type JSX,
   type ReactNode,
   useEffect,
+  useId,
   useState,
 } from 'react'
+import { themeList } from './theme-provider'
 import { Button } from './ui/button'
 import {
   Command,
@@ -34,7 +37,6 @@ import { Dialog, DialogTitle, PlainDialogContent } from './ui/dialog'
 import { Drawer, DrawerContent } from './ui/drawer'
 
 export function SearchCommand(): JSX.Element {
-  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<string[]>([])
@@ -109,31 +111,15 @@ export function SearchCommand(): JSX.Element {
             onKeyDown={onBackspaceKeydownHandler}
           />
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandList className="min-h-48 md:h-auto">
+          <CommandList>
             {!page && (
               <>
-                {searchIndex.map((searchGroup, i) => (
-                  <CommandGroup key={searchGroup.title.replace(' ', '-').concat('-', String(i))} heading={searchGroup.title}>
-                    {searchGroup.items?.length
-                      ? searchGroup.items.map((item, j) => (
-                        <CommandItem
-                          key={searchGroup.title.replace(' ', '-').concat('-', String(j))}
-                          {...(item.url
-                            ? {
-                                onSelect: () => {
-                                  run(() => {
-                                    router.push(item.url ?? '')
-                                  })
-                                },
-                              }
-                            : {})}
-                        >
-                          {item.title}
-                        </CommandItem>
-                      ))
-                      : null}
-                  </CommandGroup>
-                ))}
+                <CommandGroup heading={searchIndex.navigation.title}>
+                  <NavigationCommandList searchItems={searchIndex.navigation.items} runCommand={run} />
+                </CommandGroup>
+                <CommandGroup heading={searchIndex.posts.title}>
+                  <PostsCommandList search={search} searchItems={searchIndex.posts.items} runCommand={run} />
+                </CommandGroup>
                 <CommandGroup heading="General">
                   <CommandItem
                     icon={<MonitorIcon />}
@@ -141,8 +127,7 @@ export function SearchCommand(): JSX.Element {
                   >
                     Change Theme...
                   </CommandItem>
-
-                  {search ? <ChangeThemeCommandList runCommand={run} /> : null}
+                  <ChangeThemeCommandList runCommand={run} mount={Boolean(search)} />
                 </CommandGroup>
               </>
             )}
@@ -248,7 +233,7 @@ function CustomCommand({
   return (
     <Command
       className={cn(
-        '[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-2 [&_[cmdk-item]_svg]:size-4',
+        '[&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]_svg]:size-4',
         className,
       )}
       {...props}
@@ -256,36 +241,63 @@ function CustomCommand({
   )
 }
 
+type CommandItemCompProps = ComponentProps<typeof DefaultCommandItem> & {
+  subItems?: boolean
+}
+
+function CommandItemComp({ subItems, children, ...props }: CommandItemCompProps): JSX.Element {
+  return subItems
+    ? (
+        <DefaultCommandItem
+          className="flex cursor-pointer truncate py-0 items-center gap-2 [&_svg]:size-4"
+          {...props}
+        >
+          <div className="ml-2 border-l-2 pl-4 py-1.5 flex items-center gap-2">
+            {children}
+          </div>
+        </DefaultCommandItem>
+      )
+    : (
+        <DefaultCommandItem
+          className="flex cursor-pointer truncate items-center gap-2 [&_svg]:size-4"
+          {...props}
+        >
+          {children}
+        </DefaultCommandItem>
+      )
+}
+
 type CommandItemProps = ComponentProps<typeof DefaultCommandItem> & {
   icon?: ReactNode
   noIcon?: boolean
+  subItems?: boolean
 }
 
 function CommandItem({
   icon,
   noIcon,
+  subItems,
   children,
   ...props
 }: CommandItemProps): JSX.Element {
   const iconNode = icon ?? <ArrowRightIcon />
 
   return (
-    <DefaultCommandItem
-      className="flex cursor-pointer items-center gap-2 [&_svg]:size-4"
-      {...props}
-    >
+    <CommandItemComp subItems={subItems} {...props}>
       {!noIcon ? iconNode : null}
       {children}
-    </DefaultCommandItem>
+    </CommandItemComp>
   )
 }
 
 interface ChangeThemeCommandListProps {
   runCommand: (fn: () => void) => void
+  mount?: boolean
 }
 
 function ChangeThemeCommandList({
   runCommand,
+  mount = true,
 }: ChangeThemeCommandListProps): JSX.Element {
   const { setTheme } = useTheme()
 
@@ -297,15 +309,127 @@ function ChangeThemeCommandList({
 
   return (
     <>
-      <CommandItem icon={<MoonIcon />} onSelect={changeTheme('dark')}>
-        Change Theme to Dark
-      </CommandItem>
-      <CommandItem icon={<SunIcon />} onSelect={changeTheme('light')}>
-        Change Theme to Light
-      </CommandItem>
-      <CommandItem icon={<MonitorIcon />} onSelect={changeTheme('system')}>
-        Change Theme to System
-      </CommandItem>
+      {mount && Object.entries(themeList).map(([theme, { icon, label }]) => (
+        <CommandItem
+          key={theme}
+          icon={icon}
+          onSelect={changeTheme(theme)}
+        >
+          {label}
+        </CommandItem>
+      ))}
     </>
+  )
+}
+
+interface NavigationCommandListProps {
+  searchItems: SearchItem[]
+  runCommand: (fn: () => void) => void
+  mount?: boolean
+
+}
+
+function NavigationCommandList({
+  searchItems,
+  runCommand,
+  mount = true,
+}: NavigationCommandListProps): JSX.Element {
+  const router = useRouter()
+
+  const navigate = (path: string) => () => {
+    runCommand(() => {
+      router.push(path)
+    })
+  }
+
+  return (
+    <>
+      {mount && searchItems.map(searchItem => (
+        <CommandItem
+          key={searchItem.url}
+          icon={<ArrowRightIcon />}
+          onSelect={navigate(searchItem.url)}
+        >
+          Go to
+          {' '}
+          <span className="font-semibold">{searchItem.title}</span>
+          {' '}
+          page
+        </CommandItem>
+      ))}
+    </>
+  )
+}
+
+interface PostsCommandListProps {
+  search: string
+  searchItems: SearchItem[]
+  runCommand: (fn: () => void) => void
+  mount?: boolean
+}
+
+function PostsCommandList({
+  search,
+  searchItems,
+  runCommand,
+  mount = true,
+}: PostsCommandListProps): JSX.Element {
+  return (
+    <div>
+      {mount && searchItems.map(searchItem => (
+        <PostsCommandGroup
+          key={searchItem.url}
+          search={search}
+          searchItem={searchItem}
+          runCommand={runCommand}
+        />
+      ))}
+    </div>
+  )
+}
+
+interface PostsCommandGroupProps {
+  search: string
+  searchItem: SearchItem
+  runCommand: (fn: () => void) => void
+}
+
+function PostsCommandGroup({
+  search,
+  searchItem,
+  runCommand,
+}: PostsCommandGroupProps): JSX.Element {
+  const router = useRouter()
+  const navigate = (path: string) => () => {
+    runCommand(() => {
+      router.push(path)
+    })
+  }
+
+  const containerId = useId()
+  const container = document.getElementById(containerId)
+
+  return (
+    <div id={containerId}>
+      <CommandItem
+        icon={<FileTextIcon />}
+        data-type={searchItem.type}
+        onSelect={navigate(searchItem.url)}
+        forceMount={Boolean(container?.childElementCount)}
+      >
+        {searchItem.title}
+      </CommandItem>
+      {search !== '' && searchItem.items.map(contentId => (
+        <CommandItem
+          key={contentId.url}
+          icon={<HashIcon />}
+          data-type={contentId.type}
+          onSelect={navigate(contentId.url)}
+          subItems
+        >
+          {contentId.title}
+        </CommandItem>
+      ))}
+    </div>
   )
 }

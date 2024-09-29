@@ -1,17 +1,17 @@
-import '@/styles/mdx.css';
-import { cn } from '@/lib/utils';
-import { about } from '#site/content';
-import { MDXContent } from '@/components/mdx-content';
-import { Timeline, TimelineGroup } from '@/components/timeline';
-import { Icon } from '@/components/ui/icon';
-import Technologies from './technologies';
+import { about } from '#site/content'
+import { MDXContent } from '@/components/mdx-content'
+import { Timeline, TimelineGroup } from '@/components/timeline'
+import { Icon } from '@/components/ui/icon'
+import { cn } from '@/lib/utils'
+import Technologies from './technologies'
+import '@/styles/mdx.css'
 
 const components = {
   Technologies,
   TimelineGroup,
   Timeline,
   Icon,
-};
+}
 
 export default function About(): React.JSX.Element {
   return (
@@ -42,5 +42,5 @@ export default function About(): React.JSX.Element {
         </div>
       </section>
     </main>
-  );
+  )
 }

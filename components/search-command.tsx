@@ -1,13 +1,8 @@
-'use client';
+'use client'
 
-import {
-  type ComponentProps,
-  type ComponentPropsWithoutRef,
-  type JSX,
-  type ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+import { useMediaQuery } from '@/hooks/use-media-query'
+import { getSearchIndex } from '@/lib/search-index'
+import { cn } from '@/lib/utils'
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -15,15 +10,18 @@ import {
   MoonIcon,
   SearchIcon,
   SunIcon,
-} from 'lucide-react';
-import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { useMediaQuery } from '@/hooks/use-media-query';
-import { getSearchIndex } from '@/lib/search-index';
-import { Button } from './ui/button';
-import { Dialog, DialogTitle, PlainDialogContent } from './ui/dialog';
-import { Drawer, DrawerContent } from './ui/drawer';
+} from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useTheme } from 'next-themes'
+import {
+  type ComponentProps,
+  type ComponentPropsWithoutRef,
+  type JSX,
+  type ReactNode,
+  useEffect,
+  useState,
+} from 'react'
+import { Button } from './ui/button'
 import {
   Command,
   CommandEmpty,
@@ -31,65 +29,67 @@ import {
   CommandInput,
   CommandList,
   CommandItem as DefaultCommandItem,
-} from './ui/command';
+} from './ui/command'
+import { Dialog, DialogTitle, PlainDialogContent } from './ui/dialog'
+import { Drawer, DrawerContent } from './ui/drawer'
 
 export function SearchCommand(): JSX.Element {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState('');
-  const [pages, setPages] = useState<string[]>([]);
-  const page = pages[pages.length - 1];
-  const searchIndex = getSearchIndex();
+  const router = useRouter()
+  const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const [pages, setPages] = useState<string[]>([])
+  const page = pages[pages.length - 1]
+  const searchIndex = getSearchIndex()
 
   const handleOpen = (state: boolean) => () => {
-    setOpen(state);
-  };
+    setOpen(state)
+  }
 
   useEffect(() => {
     const down = (e: KeyboardEvent): void => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen(true);
+        e.preventDefault()
+        setOpen(true)
       }
-    };
+    }
 
-    document.addEventListener('keydown', down);
+    document.addEventListener('keydown', down)
     return () => {
-      document.removeEventListener('keydown', down);
-    };
-  }, []);
+      document.removeEventListener('keydown', down)
+    }
+  }, [])
 
   const onEscapeKeydownHandler = (e: KeyboardEvent): void => {
     if (e.key === 'Escape' && pages.length > 0) {
-      e.preventDefault();
-      setSearch('');
-      setPages((prevPages) => prevPages.slice(0, -1));
+      e.preventDefault()
+      setSearch('')
+      setPages(prevPages => prevPages.slice(0, -1))
     }
-  };
+  }
 
   const onBackspaceKeydownHandler = (e: React.KeyboardEvent): void => {
     if (e.key === 'Backspace' && !search) {
-      e.preventDefault();
-      setPages((prevPages) => prevPages.slice(0, -1));
+      e.preventDefault()
+      setPages(prevPages => prevPages.slice(0, -1))
     }
-  };
+  }
 
   const moveToPreviousPage = (): void => {
-    setPages((prevPages) => prevPages.slice(0, -1));
-    setSearch('');
-  };
+    setPages(prevPages => prevPages.slice(0, -1))
+    setSearch('')
+  }
 
   const moveToNextPage = (value: string) => () => {
-    setPages((prevPages) => [...prevPages, value]);
-    setSearch('');
-  };
+    setPages(prevPages => [...prevPages, value])
+    setSearch('')
+  }
 
   const run = (fn: () => void): void => {
-    setPages([]);
-    setSearch('');
-    setOpen(false);
-    fn();
-  };
+    setPages([])
+    setSearch('')
+    setOpen(false)
+    fn()
+  }
 
   return (
     <>
@@ -113,24 +113,24 @@ export function SearchCommand(): JSX.Element {
             {!page && (
               <>
                 {searchIndex.map((searchGroup, i) => (
-                  <CommandGroup key={i} heading={searchGroup.title}>
+                  <CommandGroup key={searchGroup.title.replace(' ', '-').concat('-', String(i))} heading={searchGroup.title}>
                     {searchGroup.items?.length
                       ? searchGroup.items.map((item, j) => (
-                          <CommandItem
-                            key={j}
-                            {...(item.url
-                              ? {
-                                  onSelect: () => {
-                                    run(() => {
-                                      router.push(item.url ?? '');
-                                    });
-                                  },
-                                }
-                              : {})}
-                          >
-                            {item.title}
-                          </CommandItem>
-                        ))
+                        <CommandItem
+                          key={searchGroup.title.replace(' ', '-').concat('-', String(j))}
+                          {...(item.url
+                            ? {
+                                onSelect: () => {
+                                  run(() => {
+                                    router.push(item.url ?? '')
+                                  })
+                                },
+                              }
+                            : {})}
+                        >
+                          {item.title}
+                        </CommandItem>
+                      ))
                       : null}
                   </CommandGroup>
                 ))}
@@ -161,10 +161,10 @@ export function SearchCommand(): JSX.Element {
         </CustomCommand>
       </DialogDrawerSearch>
     </>
-  );
+  )
 }
 
-type SearchTriggerProps = React.ComponentPropsWithoutRef<'button'>;
+type SearchTriggerProps = React.ComponentPropsWithoutRef<'button'>
 
 function SearchTrigger({
   className,
@@ -191,12 +191,12 @@ function SearchTrigger({
         <span>K</span>
       </kbd>
     </Button>
-  );
+  )
 }
 
 type DialogDrawerSearchProps = ComponentPropsWithoutRef<typeof Dialog> & {
-  contentProps?: ComponentPropsWithoutRef<typeof PlainDialogContent>;
-};
+  contentProps?: ComponentPropsWithoutRef<typeof PlainDialogContent>
+}
 
 function DialogDrawerSearch({
   children,
@@ -205,8 +205,8 @@ function DialogDrawerSearch({
   contentProps,
   ...props
 }: DialogDrawerSearchProps): JSX.Element {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
-  const title = <DialogTitle className="sr-only">Search Command</DialogTitle>;
+  const isDesktop = useMediaQuery('(min-width: 768px)')
+  const title = <DialogTitle className="sr-only">Search Command</DialogTitle>
 
   if (isDesktop) {
     return (
@@ -220,7 +220,7 @@ function DialogDrawerSearch({
           {children}
         </PlainDialogContent>
       </Dialog>
-    );
+    )
   }
 
   return (
@@ -236,10 +236,10 @@ function DialogDrawerSearch({
         {children}
       </DrawerContent>
     </Drawer>
-  );
+  )
 }
 
-type CustomCommandProps = ComponentProps<typeof Command>;
+type CustomCommandProps = ComponentProps<typeof Command>
 
 function CustomCommand({
   className,
@@ -253,13 +253,13 @@ function CustomCommand({
       )}
       {...props}
     />
-  );
+  )
 }
 
 type CommandItemProps = ComponentProps<typeof DefaultCommandItem> & {
-  icon?: ReactNode;
-  noIcon?: boolean;
-};
+  icon?: ReactNode
+  noIcon?: boolean
+}
 
 function CommandItem({
   icon,
@@ -267,7 +267,7 @@ function CommandItem({
   children,
   ...props
 }: CommandItemProps): JSX.Element {
-  const iconNode = icon ?? <ArrowRightIcon />;
+  const iconNode = icon ?? <ArrowRightIcon />
 
   return (
     <DefaultCommandItem
@@ -277,23 +277,23 @@ function CommandItem({
       {!noIcon ? iconNode : null}
       {children}
     </DefaultCommandItem>
-  );
+  )
 }
 
 interface ChangeThemeCommandListProps {
-  runCommand: (fn: () => void) => void;
+  runCommand: (fn: () => void) => void
 }
 
 function ChangeThemeCommandList({
   runCommand,
 }: ChangeThemeCommandListProps): JSX.Element {
-  const { setTheme } = useTheme();
+  const { setTheme } = useTheme()
 
   const changeTheme = (theme: string) => () => {
     runCommand(() => {
-      setTheme(theme);
-    });
-  };
+      setTheme(theme)
+    })
+  }
 
   return (
     <>
@@ -307,5 +307,5 @@ function ChangeThemeCommandList({
         Change Theme to System
       </CommandItem>
     </>
-  );
+  )
 }

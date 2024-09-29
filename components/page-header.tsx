@@ -1,11 +1,11 @@
-import Link from 'next/link';
-import React from 'react';
-import { cn } from '@/lib/utils';
-import { MobileMenu, NavMenu } from './nav-menu';
-import { Button } from './ui/button';
-import { SearchCommand } from './search-command';
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import React from 'react'
+import { MobileMenu, NavMenu } from './nav-menu'
+import { SearchCommand } from './search-command'
+import { Button } from './ui/button'
 
-type PageHeaderProps = React.HTMLAttributes<HTMLElement>;
+type PageHeaderProps = React.HTMLAttributes<HTMLElement>
 
 export function PageHeader({ className }: PageHeaderProps): JSX.Element {
   return (
@@ -36,5 +36,5 @@ export function PageHeader({ className }: PageHeaderProps): JSX.Element {
         </div>
       </div>
     </header>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import { PostCard } from '@/components/post-card';
-import { ProjectCard } from '@/components/project-card';
-import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
-import { cn } from '@/lib/utils';
-import { posts, projects } from '#site/content';
+import { posts, projects } from '#site/content'
+import { PostCard } from '@/components/post-card'
+import { ProjectCard } from '@/components/project-card'
+import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon'
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 export default function Home(): JSX.Element {
   return (
@@ -64,7 +64,7 @@ export default function Home(): JSX.Element {
           </div>
         </div>
         <div className="grid grid-cols-subgrid gap-4 md:col-span-2 md:gap-8">
-          {projects.slice(0, 4).map((project) => (
+          {projects.slice(0, 4).map(project => (
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
@@ -98,7 +98,7 @@ export default function Home(): JSX.Element {
           </div>
         </div>
         <div className="grid grid-cols-subgrid gap-y-10 md:col-span-2 md:gap-x-8 lg:col-span-3">
-          {posts.slice(0, 3).map((post) => (
+          {posts.slice(0, 3).map(post => (
             <PostCard key={post.slug} post={post} />
           ))}
         </div>
@@ -133,5 +133,5 @@ export default function Home(): JSX.Element {
         </div>
       </section>
     </main>
-  );
+  )
 }

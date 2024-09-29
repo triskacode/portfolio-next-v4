@@ -1,19 +1,19 @@
-'use client';
+'use client'
 
-import { useTheme } from 'next-themes';
-import { memo } from 'react';
-import { cn } from '@/lib/utils';
-import { useMounted } from '@/hooks/use-mounted';
-import { Icon } from './ui/icon';
-import { Label } from './ui/label';
-import { RadioGroup, RadioGroupItem } from './ui/radio-group';
-import { Skeleton } from './ui/skeleton';
+import { useMounted } from '@/hooks/use-mounted'
+import { cn } from '@/lib/utils'
+import { useTheme } from 'next-themes'
+import { memo } from 'react'
+import { Icon } from './ui/icon'
+import { Label } from './ui/label'
+import { RadioGroup, RadioGroupItem } from './ui/radio-group'
+import { Skeleton } from './ui/skeleton'
 
 interface ThemeOption {
-  id: string;
-  value: string;
-  icon: 'sun' | 'moon' | 'monitor';
-  label: string;
+  id: string
+  value: string
+  icon: 'sun' | 'moon' | 'monitor'
+  label: string
 }
 
 const themeOptions: ThemeOption[] = [
@@ -35,14 +35,14 @@ const themeOptions: ThemeOption[] = [
     icon: 'moon',
     label: 'switch to dark theme',
   },
-] as const;
+] as const
 
 function LightDarkThemeSwitcherComponent(): React.JSX.Element {
-  const { theme, setTheme } = useTheme();
-  const mounted = useMounted();
+  const { theme, setTheme } = useTheme()
+  const mounted = useMounted()
 
   if (!mounted) {
-    return <LightDarkThemeSwitcherSkeleton />;
+    return <LightDarkThemeSwitcherSkeleton />
   }
 
   return (
@@ -51,11 +51,11 @@ function LightDarkThemeSwitcherComponent(): React.JSX.Element {
       defaultValue={theme}
       value={theme}
       onValueChange={(value) => {
-        setTheme(value);
+        setTheme(value)
       }}
       aria-label="theme switcher"
     >
-      {themeOptions.map((option) => (
+      {themeOptions.map(option => (
         <div
           key={option.id}
           className="flex flex-row items-center justify-center gap-0"
@@ -73,10 +73,10 @@ function LightDarkThemeSwitcherComponent(): React.JSX.Element {
         </div>
       ))}
     </RadioGroup>
-  );
+  )
 }
 
-export const LightDarkThemeSwitcher = memo(LightDarkThemeSwitcherComponent);
+export const LightDarkThemeSwitcher = memo(LightDarkThemeSwitcherComponent)
 
 export function LightDarkThemeSwitcherSkeleton(): React.JSX.Element {
   return (
@@ -88,13 +88,13 @@ export function LightDarkThemeSwitcherSkeleton(): React.JSX.Element {
         )}
       />
     </div>
-  );
+  )
 }
 
-type ThemeSwitchLabelProps = React.ComponentProps<typeof Label>;
+type ThemeSwitchLabelProps = React.ComponentProps<typeof Label>
 
 function ThemeSwitchLabel(props: ThemeSwitchLabelProps): React.JSX.Element {
-  const { children, className, htmlFor, ...defaultProps } = props;
+  const { children, className, htmlFor, ...defaultProps } = props
   return (
     <Label
       htmlFor={htmlFor}
@@ -106,5 +106,5 @@ function ThemeSwitchLabel(props: ThemeSwitchLabelProps): React.JSX.Element {
     >
       {children}
     </Label>
-  );
+  )
 }

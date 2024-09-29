@@ -1,6 +1,6 @@
 export interface Link {
-  title: string;
-  url: string;
+  title: string
+  url: string
 }
 
 export function getHeaderNavLinks(): Link[] {
@@ -17,5 +17,5 @@ export function getHeaderNavLinks(): Link[] {
       title: 'Blog',
       url: '/blog',
     },
-  ];
+  ]
 }

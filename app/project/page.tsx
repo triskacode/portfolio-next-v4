@@ -1,5 +1,5 @@
-import { ProjectCard } from '@/components/project-card';
-import { projects } from '#site/content';
+import { projects } from '#site/content'
+import { ProjectCard } from '@/components/project-card'
 
 export default function Project(): React.JSX.Element {
   return (
@@ -29,18 +29,20 @@ export default function Project(): React.JSX.Element {
       <hr />
       {/* projects */}
       <section className="mx-auto grid w-full max-w-2xl grid-cols-1 gap-4 px-4 py-8 md:max-w-3xl md:grid-cols-2 md:gap-8 md:p-8 lg:max-w-5xl lg:grid-cols-3 xl:max-w-7xl">
-        {projects.length > 0 ? (
-          projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))
-        ) : (
-          <div className="col-span-full flex flex-col items-center justify-center">
-            <p className="text-balance text-center text-base md:text-lg">
-              No projects yet.
-            </p>
-          </div>
-        )}
+        {projects.length > 0
+          ? (
+              projects.map(project => (
+                <ProjectCard key={project.slug} project={project} />
+              ))
+            )
+          : (
+              <div className="col-span-full flex flex-col items-center justify-center">
+                <p className="text-balance text-center text-base md:text-lg">
+                  No projects yet.
+                </p>
+              </div>
+            )}
       </section>
     </main>
-  );
+  )
 }

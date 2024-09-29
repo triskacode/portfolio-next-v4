@@ -1,5 +1,5 @@
 export interface TocEntry {
-  title: string;
-  url: string;
-  items?: TocEntry[];
+  title: string
+  url: string
+  items?: TocEntry[]
 }

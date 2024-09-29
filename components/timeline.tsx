@@ -1,8 +1,8 @@
-import { Tag } from 'lucide-react';
-import { type ComponentProps, type JSX, type ReactNode } from 'react';
-import { cn, formatDate } from '@/lib/utils';
+import type { ComponentProps, JSX, ReactNode } from 'react'
+import { cn, formatDate } from '@/lib/utils'
+import { Tag } from 'lucide-react'
 
-type TimelineGroupProps = ComponentProps<'div'>;
+type TimelineGroupProps = ComponentProps<'div'>
 
 export function TimelineGroup({
   children,
@@ -13,39 +13,31 @@ export function TimelineGroup({
     <div className={cn('relative mt-4', className)} {...props}>
       {children}
     </div>
-  );
+  )
 }
 
 type TimelineProps = ComponentProps<'div'> & {
-  icon?: ReactNode;
-  iconComponentProps?: ComponentProps<'div'>;
-  date?: string | [string, string];
-  title?: string;
-};
+  icon?: ReactNode
+  iconComponentProps?: ComponentProps<'div'>
+  date?: string | [string, string]
+  title?: string
+}
 
-export function Timeline({
-  children,
-  className,
-  date,
-  icon,
-  iconComponentProps: {
-    className: iconClassName,
-    ...iconComponentPropsRest
-  } = {},
-  title,
-  ...props
-}: TimelineProps): JSX.Element {
-  const iconNode = icon ?? <Tag className="size-4" />;
-  const dateNode = date ? (
-    <time
-      className="mb-2 block text-sm font-normal leading-none text-muted-foreground"
-      aria-label="timeline-date"
-    >
-      {Array.isArray(date)
-        ? `${formatDate(date[0])} - ${formatDate(date[1])}`
-        : formatDate(date)}
-    </time>
-  ) : null;
+export function Timeline({ children, className, date, icon, iconComponentProps, title, ...props }: TimelineProps): JSX.Element {
+  const { className: iconClassName, ...iconComponentPropsRest } = iconComponentProps ?? {}
+  const iconNode = icon ?? <Tag className="size-4" />
+  const dateNode = date
+    ? (
+        <time
+          className="mb-2 block text-sm font-normal leading-none text-muted-foreground"
+          aria-label="timeline-date"
+        >
+          {Array.isArray(date)
+            ? `${formatDate(date[0])} - ${formatDate(date[1])}`
+            : formatDate(date)}
+        </time>
+      )
+    : null
 
   return (
     <div
@@ -80,5 +72,5 @@ export function Timeline({
         </div>
       </div>
     </div>
-  );
+  )
 }

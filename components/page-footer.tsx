@@ -1,19 +1,19 @@
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
-import { Button } from './ui/button';
-import { Icon } from './ui/icon';
-import { Input } from './ui/input';
-import { LightDarkThemeSwitcher } from './light-dark-theme-switcher';
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { LightDarkThemeSwitcher } from './light-dark-theme-switcher'
+import { Button } from './ui/button'
+import { Icon } from './ui/icon'
+import { Input } from './ui/input'
 
-type PageFooterProps = React.HTMLAttributes<HTMLElement>;
+type PageFooterProps = React.HTMLAttributes<HTMLElement>
 
 interface FooterLink {
-  title: string;
+  title: string
   links: {
-    text: string;
-    href: string;
-    target?: '_blank' | '_self' | '_parent' | '_top' | undefined;
-  }[];
+    text: string
+    href: string
+    target?: '_blank' | '_self' | '_parent' | '_top' | undefined
+  }[]
 }
 
 const footerLinks: FooterLink[] = [
@@ -52,7 +52,7 @@ const footerLinks: FooterLink[] = [
       },
     ],
   },
-];
+]
 
 export function PageFooter({
   className,
@@ -149,5 +149,5 @@ export function PageFooter({
         </div>
       </div>
     </footer>
-  );
+  )
 }

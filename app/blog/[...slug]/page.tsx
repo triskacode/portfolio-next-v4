@@ -1,39 +1,39 @@
-import '@/styles/mdx.css';
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
-import { posts, type Post } from '#site/content';
-import { cn, formatDate, formatTime } from '@/lib/utils';
-import { MDXContent } from '@/components/mdx-content';
-import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
-import { PostTableOfContent } from '@/components/toc';
-import { ScrollToTopButton, ShareButton } from './button';
+import { type Post, posts } from '#site/content'
+import { MDXContent } from '@/components/mdx-content'
+import { PostTableOfContent } from '@/components/toc'
+import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon'
+import { cn, formatDate, formatTime } from '@/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { ScrollToTopButton, ShareButton } from './button'
+import '@/styles/mdx.css'
 
 function getPostFromParams(params: { slug?: string[] }): Post | undefined {
-  const slug = params.slug?.join('/');
-  const foundPost = posts.find((post) => post.slugAsParams === slug);
+  const slug = params.slug?.join('/')
+  const foundPost = posts.find(post => post.slugAsParams === slug)
   if (!foundPost) {
-    return;
+    return
   }
 
-  return foundPost;
+  return foundPost
 }
 
 interface PageProps {
-  params: { slug?: string[] };
+  params: { slug?: string[] }
 }
 
 export function generateStaticParams(): PageProps['params'][] {
-  return posts.map((post) => ({
+  return posts.map(post => ({
     slug: post.slugAsParams.split('/'),
-  }));
+  }))
 }
 
 export default function Page({ params }: PageProps): React.JSX.Element {
-  const post = getPostFromParams(params);
+  const post = getPostFromParams(params)
   if (!post) {
-    notFound();
+    notFound()
   }
 
   return (
@@ -59,11 +59,15 @@ export default function Page({ params }: PageProps): React.JSX.Element {
               </time>
               <span className="text-muted-foreground odd:hidden">·</span>
               <span className="text-muted-foreground">
-                {formatTime(post.info.readingTime)} read
+                {formatTime(post.info.readingTime)}
+                {' '}
+                read
               </span>
               <span className="text-muted-foreground odd:hidden">·</span>
               <span className="text-muted-foreground">
-                {post.info.wordCount} words
+                {post.info.wordCount}
+                {' '}
+                words
               </span>
             </div>
           </div>
@@ -107,5 +111,5 @@ export default function Page({ params }: PageProps): React.JSX.Element {
         </div>
       </section>
     </main>
-  );
+  )
 }

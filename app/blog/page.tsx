@@ -1,5 +1,5 @@
-import { PostCard } from '@/components/post-card';
-import { posts } from '#site/content';
+import { posts } from '#site/content'
+import { PostCard } from '@/components/post-card'
 
 export default function Page(): React.JSX.Element {
   return (
@@ -26,12 +26,14 @@ export default function Page(): React.JSX.Element {
       <hr />
       {/* blog posts */}
       <section className="mx-auto grid w-full max-w-2xl grid-cols-1 gap-y-10 px-4 py-8 md:max-w-3xl md:grid-cols-2 md:gap-x-8 md:p-8 lg:max-w-5xl lg:grid-cols-3 xl:max-w-7xl">
-        {posts.length > 0 ? (
-          posts.map((post) => <PostCard key={post.slug} post={post} />)
-        ) : (
-          <p>No posts available at the moment.</p>
-        )}
+        {posts.length > 0
+          ? (
+              posts.map(post => <PostCard key={post.slug} post={post} />)
+            )
+          : (
+              <p>No posts available at the moment.</p>
+            )}
       </section>
     </main>
-  );
+  )
 }

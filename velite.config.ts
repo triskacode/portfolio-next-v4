@@ -1,17 +1,20 @@
-import rehypeSlug from 'rehype-slug';
-import { rehypePrettyCode } from 'rehype-pretty-code';
-import { defineCollection, defineConfig, defineSchema, s } from 'velite';
-import { remarkBlurNextImage } from './lib/remark/remark-blur-next-image';
-import { transformToSearchableToc } from './lib/toc';
+import process from 'node:process'
+import { rehypePrettyCode } from 'rehype-pretty-code'
+import rehypeSlug from 'rehype-slug'
+import { defineCollection, defineConfig, defineSchema, s } from 'velite'
+import { remarkBlurNextImage } from './lib/remark/remark-blur-next-image'
+import { transformToSearchableToc } from './lib/toc'
 
-const withSlugParams = <T extends { slug: string }>(
+function withSlugParams<T extends { slug: string }>(
   data: T,
 ): T & {
-  slugAsParams: string;
-} => ({
-  ...data,
-  slugAsParams: data.slug.split('/').slice(1).join('/'),
-});
+  slugAsParams: string
+} {
+  return {
+    ...data,
+    slugAsParams: data.slug.split('/').slice(1).join('/'),
+  }
+}
 
 const meta = defineSchema(() =>
   s.object({
@@ -19,7 +22,7 @@ const meta = defineSchema(() =>
     description: s.string().optional(),
     keyword: s.array(s.string()).optional(),
   }),
-);
+)
 
 const projectLink = defineSchema(() =>
   s.object({
@@ -27,7 +30,7 @@ const projectLink = defineSchema(() =>
     kind: s.enum(['github', 'gitlab', 'bitbucket', 'website']),
     url: s.string().url(),
   }),
-);
+)
 
 const personalInfo = defineSchema(() =>
   s.object({
@@ -44,9 +47,9 @@ const personalInfo = defineSchema(() =>
       )
       .optional(),
   }),
-);
+)
 
-const technologyKey = defineSchema(() => s.string().regex(/^[a-z0-9-.]+$/));
+const technologyKey = defineSchema(() => s.string().regex(/^[a-z0-9-.]+$/))
 
 const technologies = defineCollection({
   name: 'Technology',
@@ -55,7 +58,7 @@ const technologies = defineCollection({
     key: technologyKey(),
     displayName: s.string().max(30),
   }),
-});
+})
 
 const about = defineCollection({
   name: 'About',
@@ -69,7 +72,7 @@ const about = defineCollection({
     toc: s.toc(),
     content: s.mdx(),
   }),
-});
+})
 
 const projects = defineCollection({
   name: 'Project',
@@ -85,7 +88,7 @@ const projects = defineCollection({
       live: projectLink().optional(),
     }),
   }),
-});
+})
 
 const posts = defineCollection({
   name: 'Post',
@@ -109,7 +112,7 @@ const posts = defineCollection({
       body: s.mdx(),
     })
     .transform(withSlugParams),
-});
+})
 
 const searchPostIndex = defineCollection({
   name: 'SearchPostIndex',
@@ -117,11 +120,11 @@ const searchPostIndex = defineCollection({
   schema: s
     .object({
       title: s.string().max(100),
-      url: s.path().transform((url) => `/${url}`),
+      url: s.path().transform(url => `/${url}`),
       items: s.toc(),
     })
     .transform(transformToSearchableToc),
-});
+})
 
 export default defineConfig({
   strict: process.env.NODE_ENV === 'production',
@@ -138,4 +141,4 @@ export default defineConfig({
     remarkPlugins: [[remarkBlurNextImage]],
     rehypePlugins: [rehypeSlug, [rehypePrettyCode, { theme: 'github-dark' }]],
   },
-});
+})

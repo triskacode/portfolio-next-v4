@@ -1,16 +1,16 @@
-import dynamic from 'next/dynamic';
-import { type LucideProps as _LucideProps } from 'lucide-react';
-import dynamicIconImports from 'lucide-react/dynamicIconImports';
+import type { LucideProps as _LucideProps } from 'lucide-react'
+import dynamicIconImports from 'lucide-react/dynamicIconImports'
+import dynamic from 'next/dynamic'
 
-type IconProps = React.HTMLAttributes<SVGElement>;
+type IconProps = React.HTMLAttributes<SVGElement>
 interface LucideProps extends _LucideProps {
-  name: keyof typeof dynamicIconImports;
+  name: keyof typeof dynamicIconImports
 }
 
 export const Icon = {
   Lucide: ({ name, ...props }: LucideProps) => {
-    const LucideIcon = dynamic(dynamicIconImports[name]);
-    return <LucideIcon {...props} />;
+    const LucideIcon = dynamic(dynamicIconImports[name])
+    return <LucideIcon {...props} />
   },
   Twitter: (props: IconProps) => (
     <svg
@@ -255,4 +255,4 @@ export const Icon = {
       <path d="m204.27 178.7h-74.37l-10 15.27 81.88-.06z" fill="#00acd7" />
     </svg>
   ),
-};
+}

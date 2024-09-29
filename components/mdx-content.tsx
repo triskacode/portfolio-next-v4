@@ -1,35 +1,24 @@
-import * as runtime from 'react/jsx-runtime';
-import Image, { type ImageProps } from 'next/image';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
-import { Callout } from './callout';
-import { Icon } from './ui/icon';
-import { Button } from './ui/button';
+import { cn } from '@/lib/utils'
+import Image, { type ImageProps } from 'next/image'
+import Link from 'next/link'
+import { createElement } from 'react'
+import * as runtime from 'react/jsx-runtime'
+import { Callout } from './callout'
+import { Button } from './ui/button'
+import { Icon } from './ui/icon'
 
 interface MDXComponentProps {
-  components?: Record<string, unknown>;
+  components?: Record<string, unknown>
 }
 
-const useMDXComponent = (
-  code: string,
-): React.ComponentType<MDXComponentProps> => {
-  // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func -- Necessary for dynamic code execution from MDX
-  const fn = new Function(code);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access -- Necessary because MDX code is generated dynamically
-  return fn({ ...runtime }).default;
-};
+function useMDXComponent(code: string): React.ComponentType<MDXComponentProps> {
+  // eslint-disable-next-line no-new-func
+  const fn = new Function(code)
+  return fn({ ...runtime }).default
+}
 
 interface MDXContentProps extends MDXComponentProps {
-  code: string;
-}
-
-export function MDXContent({
-  code,
-  components,
-}: MDXContentProps): React.JSX.Element {
-  const Component = useMDXComponent(code);
-
-  return <Component components={{ ...sharedComponents, ...components }} />;
+  code: string
 }
 
 const sharedComponents = {
@@ -71,10 +60,23 @@ const sharedComponents = {
   code: Code,
   Image: StyledImage,
   Callout,
-};
+}
+
+export function MDXContent({
+  code,
+  components,
+}: MDXContentProps): React.JSX.Element {
+  const Component = useMDXComponent(code)
+
+  return <Component components={{ ...sharedComponents, ...components }} />
+}
 
 interface HeadingsProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  level: 1 | 2 | 3 | 4 | 5 | 6;
+  level: 1 | 2 | 3 | 4 | 5 | 6
+}
+
+function HeadingComponent({ level, ...props }: HeadingsProps) {
+  return createElement(`h${level}`, props)
 }
 
 function Headings({
@@ -84,11 +86,9 @@ function Headings({
   children,
   ...props
 }: HeadingsProps): React.JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/restrict-template-expressions -- Necessary to ensure correct typing for dynamic heading component
-  const Component = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-
   return (
-    <Component
+    <HeadingComponent
+      level={level}
       id={id}
       className={cn(
         'group relative scroll-m-[var(--header-height)] font-semibold tracking-tight',
@@ -109,13 +109,16 @@ function Headings({
           variant="ghost"
           className="absolute -left-8 top-1/2 hidden size-6 -translate-y-1/2 transform p-0 opacity-0 group-hover:opacity-100 md:flex"
         >
-          <span className="sr-only">Anchor link for {children}</span>
+          <span className="sr-only">
+            Anchor link for
+            {children}
+          </span>
           <Icon.Lucide name="hash" className="size-4" />
         </Button>
         {children}
       </Link>
-    </Component>
-  );
+    </HeadingComponent>
+  )
 }
 
 function Anchor({
@@ -129,7 +132,7 @@ function Anchor({
       href={href}
       {...props}
     />
-  );
+  )
 }
 
 function Paragraph({
@@ -141,19 +144,19 @@ function Paragraph({
       className={cn('leading-7 [&:not(:first-child)]:mt-6', className)}
       {...props}
     />
-  );
+  )
 }
 
 type ListGroupProps = React.HTMLAttributes<HTMLUListElement> & {
-  as: 'ul' | 'ol';
-};
+  as: 'ul' | 'ol'
+}
 
 function ListGroup({
   as = 'ul',
   className,
   ...props
 }: ListGroupProps): React.JSX.Element {
-  const Component = as;
+  const Component = as
 
   return (
     <Component
@@ -167,14 +170,14 @@ function ListGroup({
       )}
       {...props}
     />
-  );
+  )
 }
 
 function ListItem({
   className,
   ...props
 }: React.HTMLAttributes<HTMLLIElement>): JSX.Element {
-  return <li className={cn('mt-2', className)} {...props} />;
+  return <li className={cn('mt-2', className)} {...props} />
 }
 
 function Blockquote({
@@ -186,7 +189,7 @@ function Blockquote({
       className={cn('mt-6 border-l-2 pl-6 italic', className)}
       {...props}
     />
-  );
+  )
 }
 
 function Img({
@@ -194,13 +197,13 @@ function Img({
   ...props
 }: React.ImgHTMLAttributes<HTMLImageElement>): React.JSX.Element {
   return (
-    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text -- Using img element for custom styling and alt text is provided via props
+    // eslint-disable-next-line next/no-img-element
     <img className={cn('my-4 rounded-md', className)} {...props} />
-  );
+  )
 }
 
 function Hr({ ...props }): React.JSX.Element {
-  return <hr className="my-4 md:my-8" {...props} />;
+  return <hr className="my-4 md:my-8" {...props} />
 }
 
 function Table({
@@ -211,7 +214,7 @@ function Table({
     <div className="my-6 w-full overflow-y-auto">
       <table className={cn('w-full', className)} {...props} />
     </div>
-  );
+  )
 }
 
 function Tr({
@@ -223,7 +226,7 @@ function Tr({
       className={cn('m-0 border-t p-0 even:bg-muted', className)}
       {...props}
     />
-  );
+  )
 }
 
 function Th({
@@ -238,7 +241,7 @@ function Th({
       )}
       {...props}
     />
-  );
+  )
 }
 
 function Td({
@@ -253,7 +256,7 @@ function Td({
       )}
       {...props}
     />
-  );
+  )
 }
 
 function Pre({
@@ -268,7 +271,7 @@ function Pre({
       )}
       {...props}
     />
-  );
+  )
 }
 
 function Code({
@@ -283,7 +286,7 @@ function Code({
       )}
       {...props}
     />
-  );
+  )
 }
 
 function StyledImage(props: ImageProps): React.JSX.Element {
@@ -292,5 +295,5 @@ function StyledImage(props: ImageProps): React.JSX.Element {
       className="rounded-md border bg-muted transition-colors"
       {...props}
     />
-  );
+  )
 }

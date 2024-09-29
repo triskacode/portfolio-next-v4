@@ -1,6 +1,6 @@
-import { type JSX } from 'react';
-import { technologies, type Technology } from '#site/content';
-import { Icon } from '@/components/ui/icon';
+import type { JSX } from 'react'
+import { technologies, type Technology } from '#site/content'
+import { Icon } from '@/components/ui/icon'
 
 const availableIcon = {
   typescript: Icon.Typescript,
@@ -13,17 +13,17 @@ const availableIcon = {
   nestjs: Icon.Nestjs,
   golang: Icon.Golang,
   fiber: Icon.Fiber,
-} as Record<string, React.FC<React.HTMLAttributes<SVGElement>>>;
+} as Record<string, React.FC<React.HTMLAttributes<SVGElement>>>
 
 type TechnologyItemProps = React.HTMLAttributes<HTMLDivElement> & {
-  technology: Technology;
-};
+  technology: Technology
+}
 
 function TechnologyItem({
   technology,
   ...props
 }: TechnologyItemProps): JSX.Element {
-  const IconTech = availableIcon[technology.key];
+  const IconTech = availableIcon[technology.key]
 
   return (
     <div
@@ -32,11 +32,13 @@ function TechnologyItem({
       {...props}
     >
       <div className="flex size-10 shrink-0 items-center justify-center rounded-md border bg-secondary">
-        {IconTech ? (
-          <IconTech className="w-4" />
-        ) : (
-          <Icon.Lucide name="package" className="w-4" />
-        )}
+        {IconTech
+          ? (
+              <IconTech className="w-4" />
+            )
+          : (
+              <Icon.Lucide name="package" className="w-4" />
+            )}
       </div>
       <div className="overflow-hidden text-base">
         <p className="overflow-hidden text-ellipsis">
@@ -44,7 +46,7 @@ function TechnologyItem({
         </p>
       </div>
     </div>
-  );
+  )
 }
 
 export default function Technologies(): JSX.Element {
@@ -53,9 +55,9 @@ export default function Technologies(): JSX.Element {
       role="list"
       className="mb-6 grid grid-cols-2 gap-6 md:grid-cols-3 [&:not(:first-child)]:mt-6"
     >
-      {technologies.map((technology) => (
+      {technologies.map(technology => (
         <TechnologyItem key={technology.key} technology={technology} />
       ))}
     </div>
-  );
+  )
 }

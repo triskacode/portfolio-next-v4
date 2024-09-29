@@ -1,7 +1,7 @@
-import { Label } from '@radix-ui/react-label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@radix-ui/react-label'
 
 export default function Contact(): React.JSX.Element {
   return (
@@ -44,5 +44,5 @@ export default function Contact(): React.JSX.Element {
         </form>
       </section>
     </main>
-  );
+  )
 }

@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import { type Post } from '#site/content';
-import { Button, type ButtonProps } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
+import type { Post } from '#site/content'
+import { Button, type ButtonProps } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon'
 
 interface ShareButtonProps extends ButtonProps {
-  post: Post;
+  post: Post
 }
 
 export function ShareButton({
@@ -18,16 +18,17 @@ export function ShareButton({
         title: post.title,
         text: post.description,
         url: window.location.href,
-      });
-    } catch (error) {
+      })
+    }
+    catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {
         // User cancelled the share operation
-        return;
+        return
       }
 
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(window.location.href)
     }
-  };
+  }
 
   return (
     <Button
@@ -39,7 +40,7 @@ export function ShareButton({
       <Icon.Lucide name="share-2" className="size-4" />
       <span className="sr-only">Share</span>
     </Button>
-  );
+  )
 }
 
 export function ScrollToTopButton(props: ButtonProps): React.JSX.Element {
@@ -47,13 +48,13 @@ export function ScrollToTopButton(props: ButtonProps): React.JSX.Element {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
-    });
-  };
+    })
+  }
 
   return (
     <Button variant="outline" size="icon" onClick={scrollToTop} {...props}>
       <Icon.Lucide name="arrow-up" className="size-4" />
       <span className="sr-only">Scroll to top</span>
     </Button>
-  );
+  )
 }

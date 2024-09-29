@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { cn } from '@/lib/utils';
-import { Button, type ButtonProps } from './ui/button';
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { Button, type ButtonProps } from './ui/button'
+import { ScreenReaderOnly } from './ui/screen-reader-only'
 import {
   Sheet,
-  SheetTrigger,
   SheetContent,
-  SheetTitle,
   SheetDescription,
-} from './ui/sheet';
-import { ScreenReaderOnly } from './ui/screen-reader-only';
+  SheetTitle,
+  SheetTrigger,
+} from './ui/sheet'
 
 const links = [
   {
@@ -23,20 +23,20 @@ const links = [
     label: 'Blog',
     href: '/blog',
   },
-];
+]
 
 interface NavMenuProps {
-  readonly className?: string;
+  readonly className?: string
 }
 
 export function NavMenu({ className }: NavMenuProps): JSX.Element {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav
       className={cn('flex items-center gap-x-4 text-sm lg:gap-x-6', className)}
     >
-      {links.map((link) => (
+      {links.map(link => (
         <Button
           key={link.href}
           asChild
@@ -51,21 +51,21 @@ export function NavMenu({ className }: NavMenuProps): JSX.Element {
         </Button>
       ))}
     </nav>
-  );
+  )
 }
 
-type MobileMenuProps = ButtonProps;
+type MobileMenuProps = ButtonProps
 
 export function MobileMenu({
   className,
   ...props
 }: MobileMenuProps): JSX.Element {
-  const pathname = usePathname();
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
   useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
+    setIsMenuOpen(false)
+  }, [pathname])
 
   return (
     <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -127,5 +127,5 @@ export function MobileMenu({
         </div>
       </SheetContent>
     </Sheet>
-  );
+  )
 }

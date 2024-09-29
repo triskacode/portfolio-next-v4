@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { type Post } from '#site/content';
-import { cn, formatDate, formatTime } from '@/lib/utils';
+import type { Post } from '#site/content'
+import { cn, formatDate, formatTime } from '@/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export interface PostCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  post: Post;
+  post: Post
 }
 
 export function PostCard({
@@ -45,7 +45,11 @@ export function PostCard({
             <span className="last:hidden">•</span>
             <div>
               <dt className="sr-only">Reading time</dt>
-              <dd>{formatTime(post.info.readingTime)} read</dd>
+              <dd>
+                {formatTime(post.info.readingTime)}
+                {' '}
+                read
+              </dd>
             </div>
           </dl>
           <dt className="sr-only">Title</dt>
@@ -66,7 +70,7 @@ export function PostCard({
             <dt className="sr-only">Tags</dt>
             <dd>
               <ul className="flex flex-row flex-wrap items-center justify-start gap-2 text-sm text-muted-foreground">
-                {post.tags.map((tag) => (
+                {post.tags.map(tag => (
                   <li key={tag}>{`#${tag}`}</li>
                 ))}
               </ul>
@@ -75,5 +79,5 @@ export function PostCard({
         )}
       </dl>
     </article>
-  );
+  )
 }
